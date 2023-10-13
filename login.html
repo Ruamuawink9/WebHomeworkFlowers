@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>柒月花卉用户登录页面</title>
+		<link rel="stylesheet" href="css/login.css" type="text/css">	
+		<script type="text/javascript">
+			var flag1=false;
+			var flag2=false;
+			var flag3=false;
+			function $(id){
+				return document.getElementById(id);
+			}
+			//检查卡号
+			function checkId(){
+				$("error_name").innerText="";
+				var userName=$("uname").value;
+				if(userName == "" || userName == null){
+					$("error_name").innerText= "*用户名不能为空!";
+					return;
+				}
+				if(userName.length <4 || userName.length >20){
+					$("error_name").innerText="*长度在4-20之间";
+					return;
+				}
+				// 用户名只能是数字,字母,下划线,以字母开头
+				var userMatch = /^[a-zA-Z][a-zA-Z0-9_]*$/;
+				if(!userName.match(userMatch)){
+					$("error_name").innerText ="*用户名只能是数字、字母、下划线组成，必须以字母开头";
+					return;
+				}
+				flag1=true;
+			}
+			//检查口令
+			function checkPwd(){
+				var userPwd =$("upwd").value;
+				$("error_pwd").innerText ="";
+				if(userPwd ==""||userPwd==null){
+					$("error_pwd").innerText="*密码不能为空";
+					return;
+				}
+				if(userPwd.length<8 || userPwd.length>25){
+					$("error_pwd").innerText ="*密码长度为8-25位";
+					return;
+				}
+				flag2=true;
+			}
+			//检查二次口令
+			function checkPwdQR(){
+				var userPwdQR =$("upwdqr").value;
+				var userPwd =$("upwd").value;
+				$("error_pwd_id").innerText ="";
+				if(userPwdQR ==""|| userPwdQR==null){
+					$("error_pwd_id").innerText="*确认密码不能为空";
+					return;
+				}
+				if(userPwdQR !=userPwd){
+					$("error_pwd_id").innerText="*输入的两次密码不一致";
+					return;
+				}
+				flag3=true;
+			}	
+			// 认证按钮
+			function login(){
+			console.log(1)
+			if(flag1 && flag2 && flag3){
+				
+				//只有三者同时满足要求，才进行验证
+				//假设用户名为suser,密码为12345678
+				//1.获取输入的卡号、口令
+				var userName = $("uname").value;
+				var userPwd = $("upwd").value;
+				//2.判断卡号、口令是否正确
+				if(userName == "suser" && userPwd == "12345678"){
+					//说明认证成功，可以进行跳转了
+					window.location.href="./index.html";
+				}
+				else{
+					//卡号、口令不正确
+					alert("卡号、密码输入不正确！请重新输入。");
+				}
+			}
+			else{
+				//检查卡号或口令是否输入正确
+				alert("检查卡号或密码是否输入正确！");
+			}
+		}
+		
+			function chakanmima(){
+				alert("用户名是 suser 密码是12345678");
+			}
+		</script>
+	</head>
+	<body>
+		<div id="login">
+			<div class="container">
+				<div class="title">柒月花卉用户登录页面</div>
+				<form action="">
+					<div class="user_name">
+						<span>用&nbsp;户&nbsp;名&nbsp;:</span>
+						<input type="text" name="" id="uname" placeholder="请输入用户名"  onblur="checkId();"/>
+						<div class="name-label" id="error_name"></div>
+					</div>
+					<!-- 密码 -->
+					<div class="user-pwd">
+						<span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</span>
+						<input type="password" id="upwd" placeholder="请输入密码"onblur="checkPwd();">
+						<div class="pwb-label" id="error_pwd" div></div>
+					</div>
+				<!-- 确认密码 -->
+					<div class="user-pwd">
+						<span>二次密码:</span>
+						<input type="password" id="upwdqr" placeholder="请输入密码" onblur="checkPwdQR();">
+						<div class="queren-pwb-label" id="error_pwd_id" div></div>
+					</div>
+					<!-- 按钮 -->
+					<div class="btn">
+						<input type="button" value="认  证" class="btn1" id="login_btn" onclick="login()">
+						<input type="reset" value=" 重  置" class="btn2">
+					</div>
+				</form>
+				<p class="foot">
+					
+					<span id="chakan" onclick="chakanmima();"><a href="#">点击查看密码与用户名</a></span>
+					<span>已经认证？</span>
+				</p>
+			</div>
+			
+		</div>
+	</body>
+</html>
